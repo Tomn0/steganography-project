@@ -1,0 +1,14 @@
+Mercedes-Benz A-Class (W168) z napędem na przednie koła został wprowadzony do produkcji seryjnej w 2001 roku. Ta wersja należy do 
+klasy pojazdów Compact car mieszczących się w segmencie C.
+
+Ta wersja pojazdu posiada nadwozie typu Minivan – 5 drzwiowe i 5 miejscowe. A-Class (W168) wyposażone zostało w system kontroli trakcji ESP,
+czyli układ elektroniczny stabilizujący tor jazdy samochodu podczas pokonywania zakrętu, przejmujący kontrolę nad połączonymi układami ABS 
+i ASR. Auto ma wymiary: 3606mm długość, 1719mm szerokość i 1575mm wysokość. Masa samochodu to 1105kg, a całkowita dopuszczalna masa wynosi 
+1490kg.
+
+Silnik położony jest poprzecznie z przodu pojazdu. Silnik ma pojemność 1397 cm3, a moc którą osiąga to 82KM, czyli 60kW, którą osiąga 
+przy 5000nm/3750obr. Pojazd wyposażono w silnik benzynowy. Średnie spalanie możemy osiągnąć na poziomie 7.1 litra na 100km, a do 
+zbiornika paliwa nalejemy 54 litrów. Do setki auto rozpędza się w 12.9sek., a prędkość maksymalna to 170km/h.
+
+Auto z systemem hamulcowym z przodu “Tarcze niewentylowane”, a z tyłu “Bębny”. Zawieszenie montowane na przód pojazdu to Wahacze, 
+kolumna MacPhersona, stabilizator, a na tył to Wahacz wzdłużny, sprężyny śrubowe, stabilizator.

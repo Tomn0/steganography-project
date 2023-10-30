@@ -1,0 +1,21 @@
+Dzisiaj rozpoczynamy kolejny rozdział historii Microsoft Teams wraz z publiczną wersją zapoznawczą nowej aplikacji Microsoft Teams dla systemu Windows.
+
+Od samego początku w 2017 roku naszą wizją dotyczącą aplikacji Teams było zawsze gromadzenie wszystkich narzędzi do komunikacji i 
+współpracy w jednym miejscu, od czatów i spotkań po aplikacje i pliki. Niezależnie od tego, czy używasz ich w pracy, szkole czy w 
+życiu codziennym, ponad 280 milionów osób co miesiąc korzysta z usługi Teams, aby zachować produktywność i utrzymywać kontakt ze 
+współpracownikami, partnerami, klientami, przyjaciółmi i rodziną. Usługa Teams umożliwiła także wprowadzenie niesamowitych innowacji 
+od zewnętrznych niezależnych dostawców oprogramowania (ISV), programistów korporacyjnych i integratorów systemów — w rezultacie czego 
+w sklepie dostępnych jest ponad 1900 aplikacji, a także ponad 100 000 aplikacji niestandardowych, które płynnie integrują się z 
+platformą Teams. Aplikacje te w połączeniu z szerokim ekosystemem urządzeń i pomieszczeń z certyfikatem Teams pomagają zachować
+produktywność i płynność pracy.
+
+Słuchaliśmy Waszych opinii, których kulminacją było ponowne przemyślenie aplikacji Teams od podstaw. 
+Nowa aplikacja opiera się na szybkości, wydajności, elastyczności i inteligencji — zapewnia nawet dwukrotnie większą wydajność 
+przy zużyciu o 50 procent mniej pamięci, dzięki czemu możesz zaoszczędzić czas i efektywniej współpracować. Usprawniliśmy także wygodę 
+użytkownika, dzięki czemu korzystanie z niej jest prostsze i łatwiej jest znaleźć wszystko w jednym miejscu. Udoskonalenia te stanowią 
+także podstawę dla nowych, zmieniających zasady gier rozwiązań opartych na sztucznej inteligencji, takich jak Copilot dla Microsoft Teams,
+ ogłoszony na początku tego miesiąca.
+
+Chociaż wprowadzamy już ciągły strumień ulepszeń w istniejących aplikacjach Teams, największe przełomy będą dostępne tylko w 
+nowych aplikacjach Teams. Poniżej znajduje się podsumowanie najważniejszych obszarów ulepszeń, ale możesz dokładniej zapoznać się 
+z pełną listą na naszym blogu społeczności technicznej.
