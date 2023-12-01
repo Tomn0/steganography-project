@@ -33,7 +33,8 @@ def truncate_line(line, available_width, font, fontsize):
 
     return truncated_line
 
-def encode_to_pdf(doc, text, name, fontname="helv", fontsize=12, margin=50, max_line_width=100):
+def encode_to_pdf(doc, text, name, fontname="helv", fontsize=12, margin_size=50, max_line_width=100):
+  margin = margin_size
   p = fitz.Point(margin, margin)  # start point of 1st line
   page = doc.new_page()  # new or existing page via doc[n]
 
@@ -44,11 +45,6 @@ def encode_to_pdf(doc, text, name, fontname="helv", fontsize=12, margin=50, max_
   page_width = page.rect.width
   available_width = page_width - 2 * margin
 
-  breakpoint()
-
-  # Split the text into lines based on the available width
-  # lines = []
-  # Split based on newlines from the original text
   lines = []
   remaining_text = text.split("\n")
   
@@ -71,7 +67,7 @@ def encode_to_pdf(doc, text, name, fontname="helv", fontsize=12, margin=50, max_
       p = shift_point(p, 0, 13)
     page.insert_text(p,
                       line,  # the text (honors '\n')
-                      fontname = "tiro",  # the default font
+                      fontname = fontname,  # the default font
                       # fontfile = 'fonts\OpenSans_ABCDE-shifted-up-or-down.sfds',
                       fontsize = fontsize,  # the default font size
                       rotate = 0,  # also available: 90, 180, 270
@@ -86,8 +82,7 @@ def encode_to_pdf(doc, text, name, fontname="helv", fontsize=12, margin=50, max_
       # reset text pointer
       p = fitz.Point(50, 72)
       # Reset the margin
-      margin = 10
-
+      margin = margin_size
 
   doc.save(f"{name}.pdf")
 
@@ -96,9 +91,9 @@ if __name__ == '__main__':
   doc = fitz.open()  # new or existing PDF
 
 
-  with open("data/drukus_ad.txt", "r", encoding="utf-8") as f:
+  with open("data/anthem.txt", "r", encoding="utf-8") as f:
     filetxt = "".join(f.readlines())
-    encode_to_pdf(doc, filetxt, "penal_code_chapter")
+    encode_to_pdf(doc, filetxt, "anthem")
 
 
 '''
