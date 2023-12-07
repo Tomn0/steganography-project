@@ -34,6 +34,7 @@ def truncate_line(line, available_width, font, fontsize):
     return truncated_line
 
 def encode_to_pdf(doc, text, name, fontname="helv", fontsize=12, margin_size=50, max_line_width=100):
+  # TODO: check the length of the text vs the cover text
   margin = margin_size
   p = fitz.Point(margin, margin)  # start point of 1st line
   page = doc.new_page()  # new or existing page via doc[n]
@@ -93,6 +94,7 @@ if __name__ == '__main__':
 
   with open("data/anthem.txt", "r", encoding="utf-8") as f:
     filetxt = "".join(f.readlines())
+    # TODO: podawanie di funkcji listy bitów
     encode_to_pdf(doc, filetxt, "anthem")
 
 
