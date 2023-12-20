@@ -1,7 +1,7 @@
-from line_shift_encode import init as init_line_shift_encode
-from line_shift_decode import init as init_line_shift_decode
-from word_shift_encode import init as init_word_shift_encode
-from word_shift_decode import init as init_word_shift_decode
+from tabs.line_shift.line_shift_encode import init as init_line_shift_encode
+from tabs.line_shift.line_shift_decode import init as init_line_shift_decode
+from tabs.word_shift.word_shift_encode import init as init_word_shift_encode
+from tabs.word_shift.word_shift_decode import init as init_word_shift_decode
 import tkinter as tk
 from tkinter import ttk
 
