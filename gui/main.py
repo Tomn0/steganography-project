@@ -1,4 +1,4 @@
-from word_shift_coding import init as init_word_shift_coding
+from word_shift_encode import init as init_word_shift_coding
 
 import tkinter as tk
 from tkinter import ttk
@@ -9,7 +9,6 @@ root.geometry("900x600")
 
 tab_control = ttk.Notebook(root)
 init_word_shift_coding(tab_control)
-
 
 
 # Dodanie zakładek do głównego okna

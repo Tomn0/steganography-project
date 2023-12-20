@@ -31,9 +31,7 @@ def list_files_directory(dir_path: str = '/Users/lukaszsochacki/Desktop/Studia/S
 def create_files_dropdown(tab):
     files = list_files_directory()
     
-    ttk.Label(tab, text = "Select the Month :",  
-    font = ("Times New Roman", 10))
-
+    file_label = ttk.Label(tab, text = "Select file to encode in :")
     n = tk.StringVar() 
     file_choosen = ttk.Combobox(tab, width = 27,  textvariable = n) 
     
@@ -41,6 +39,8 @@ def create_files_dropdown(tab):
     file_choosen['values'] = files 
     
     # Shows february as a default value 
-    file_choosen.current(1) 
+    file_label.pack()
+
     file_choosen.pack() 
+    file_choosen.current(1) 
     return file_choosen
