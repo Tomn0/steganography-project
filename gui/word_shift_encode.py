@@ -8,7 +8,7 @@ def init(parent):
     global word_shift_tab
 
     word_shift_tab = ttk.Frame(parent)
-    parent.add(word_shift_tab, text="Word shift coding")
+    parent.add(word_shift_tab, text="Word shift - Encode")
 
     select_location_button = ttk.Button(word_shift_tab, text="Select save location", command=call_directory_finder)
     select_location_button.pack(pady=10)
@@ -40,19 +40,19 @@ def call_directory_finder(): # We choose pdf that we want to encode based on our
         execute_shift = ttk.Button(
             word_shift_tab,
             text="Encode",
-            command=lambda: send_data(directory_label, text_input, files),
+            command=lambda: send_data(selected_directory, text_input, files),
             state="normal"
         )
 
         execute_shift.pack()    
 
 
-def send_data(dir: ttk.Label, message: scrolledtext.ScrolledText, file: ttk.Combobox):
+def send_data(dir: str, message: scrolledtext.ScrolledText, file: ttk.Combobox):
     files_list = list_files_directory()
     data = {
-        'directory': dir.cget('text'),
+        'directory': dir,
         'message': message.get("1.0", tk.END),
         'file': files_list[file.current()]
     }
-    print(data)
+    print(f'Encoding using provided data: {data}')
     return data
