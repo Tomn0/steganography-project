@@ -18,22 +18,29 @@ def truncate_line(line, available_width, font, fontsize):
         return line  # Line already fits within the available width
 
     truncated_line = ""
+    remaining_text = ""
+    width_exceeded = False
     # split on whitespace
     words = line.split()
 
     for word in words:
         word_width = font.text_length(word, fontsize)
 
-        if font.text_length(truncated_line + " " + word, fontsize) <= available_width:
+        if font.text_length(truncated_line + " " + word, fontsize) <= available_width and not width_exceeded:
             if truncated_line:
                 truncated_line += " "
             truncated_line += word
         else:
-            break  # Stop adding words when the line exceeds the available width
+          width_exceeded = True
+          if remaining_text:
+            remaining_text += " "
+          # TODO: Warning: if the line is passed here again and again (because one word is longer than available width) it will cause the program to enter en infinite loop
+          #break  # Stop adding words when the line exceeds the available width
+          remaining_text += word
 
-    return truncated_line
+    return truncated_line, remaining_text
 
-def encode_to_pdf(doc, text, name, fontname="helv", fontsize=12, margin_size=50, max_line_width=100):
+def encode_to_pdf(doc, text, text_to_encode = b"10101010", name = "encoded", fontname="helv", fontsize=12, margin_size=50, max_line_width=100):
   # TODO: check the length of the text vs the cover text
   margin = margin_size
   p = fitz.Point(margin, margin)  # start point of 1st line
@@ -52,13 +59,17 @@ def encode_to_pdf(doc, text, name, fontname="helv", fontsize=12, margin_size=50,
   for line in remaining_text:
     # can also be done using font.text_length()
     line_lenght = fitz.get_text_length(line, fontname=fontname, fontsize=fontsize)
-    if line_lenght >= available_width:
-       # break line
+
+    while line_lenght >= available_width:
       font = fitz.Font(fontname)
-      truncated_line = truncate_line(line, available_width, font, fontsize)
+      truncated_line, excess_text = truncate_line(line, available_width, font, fontsize)
+      if excess_text == line:
+        raise ValueError('The provided text lines contains words that exceed the page width limit.')
       lines.append(truncated_line)
-    else:
-       lines.append(line)
+      line = excess_text
+      line_lenght = fitz.get_text_length(line, fontname=fontname, fontsize=fontsize)
+
+    lines.append(line)
 
 
   for i, line in enumerate(lines):
@@ -92,10 +103,10 @@ if __name__ == '__main__':
   doc = fitz.open()  # new or existing PDF
 
 
-  with open("data/anthem.txt", "r", encoding="utf-8") as f:
+  with open("data/lorem-ipsum.txt", "r", encoding="utf-8") as f:
     filetxt = "".join(f.readlines())
-    # TODO: podawanie di funkcji listy bitów
-    encode_to_pdf(doc, filetxt, "anthem")
+    # TODO: podawanie do funkcji listy bitów
+    encode_to_pdf(doc, filetxt, "lorem-ipsum")
 
 
 '''
