@@ -12,6 +12,7 @@ def get_line_spacing(pdf_path, page_number):
     # get first line
     prev_line = lines[0]
 
+    # TODO: bierz co drugą linię a nie każdą po kolei!!
     for line in lines[1:]:
         # get coordinates
         origin = line['spans'][0]['origin']
@@ -31,7 +32,7 @@ def get_line_spacing(pdf_path, page_number):
 
     return line_spacing
 
-pdf_path = "anthem.pdf"
+pdf_path = "lorem-ipsum.pdf"
 page_number = 0  # Replace with the desired page number
 spacing_values = get_line_spacing(pdf_path, page_number)
 

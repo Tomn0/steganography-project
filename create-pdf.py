@@ -40,7 +40,7 @@ def truncate_line(line, available_width, font, fontsize):
 
     return truncated_line, remaining_text
 
-def encode_to_pdf(doc, text, text_to_encode = b"10101010", name = "encoded", fontname="helv", fontsize=12, margin_size=50, max_line_width=100):
+def encode_to_pdf(doc, text, name = "encoded", text_to_encode = "10101010", fontname="helv", fontsize=12, margin_size=50, max_line_width=100):
   # TODO: check the length of the text vs the cover text
   margin = margin_size
   p = fitz.Point(margin, margin)  # start point of 1st line
@@ -71,12 +71,19 @@ def encode_to_pdf(doc, text, text_to_encode = b"10101010", name = "encoded", fon
 
     lines.append(line)
 
+  text_to_encode = list(text_to_encode)
+  line_spaces = [13,14]
 
   for i, line in enumerate(lines):
     if i % 2 == 0:
-      p = shift_point(p, 0, 14)
+      if text_to_encode:
+        val_to_encode = int(text_to_encode.pop(0), 10)
+      else: 
+        val_to_encode = 0
+      p = shift_point(p, 0, line_spaces[val_to_encode])
+
     else: 
-      p = shift_point(p, 0, 13)
+      p = shift_point(p, 0, line_spaces[0])
     page.insert_text(p,
                       line,  # the text (honors '\n')
                       fontname = fontname,  # the default font
@@ -106,7 +113,7 @@ if __name__ == '__main__':
   with open("data/lorem-ipsum.txt", "r", encoding="utf-8") as f:
     filetxt = "".join(f.readlines())
     # TODO: podawanie do funkcji listy bitów
-    encode_to_pdf(doc, filetxt, "lorem-ipsum")
+    encode_to_pdf(doc, filetxt, name = "lorem-ipsum", text_to_encode="10101010")
 
 
 '''
