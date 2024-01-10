@@ -44,3 +44,12 @@ def create_files_dropdown(tab):
     file_choosen.pack() 
     file_choosen.current(1) 
     return file_choosen
+
+def msg_to_bits(msg: str) -> list[str]: # We assume that each symbol will be represented by 8 bits
+    res = []
+    for s in msg:
+        if s.isalnum():
+            bits = bin(ord(s))[2:]
+            bits = '0'*(8 - len(bits)) + bits
+            res.append(bits)
+    return res
