@@ -1,4 +1,9 @@
-from word_shift_coding import init as init_word_shift_coding
+from tabs.line_shift.line_shift_encode import init as init_line_shift_encode
+from tabs.line_shift.line_shift_decode import init as init_line_shift_decode
+from tabs.word_shift.word_shift_encode import init as init_word_shift_encode
+from tabs.word_shift.word_shift_decode import init as init_word_shift_decode
+from tabs.feature.feature_encode import init as init_feature_encode
+from tabs.feature.feature_decode import init as init_feature_decode
 
 import tkinter as tk
 from tkinter import ttk
@@ -8,9 +13,12 @@ root.title("Text encoding - Steganography project")
 root.geometry("900x600")
 
 tab_control = ttk.Notebook(root)
-init_word_shift_coding(tab_control)
-
-
+init_line_shift_encode(tab_control)
+init_line_shift_decode(tab_control)
+init_word_shift_encode(tab_control)
+init_word_shift_decode(tab_control)
+init_feature_encode(tab_control)
+init_feature_decode(tab_control)
 
 # Dodanie zakładek do głównego okna
 tab_control.pack(expand=1, fill="both")
