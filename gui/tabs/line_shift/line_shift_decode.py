@@ -1,6 +1,8 @@
 import tkinter as tk
 from tkinter import ttk, filedialog
 from utils import *
+from pathlib import Path
+from .decode import *
 
 select_clicked = False
 
@@ -39,13 +41,36 @@ def call_file_finder(): # We choose pdf that we want to encode based on our text
     execute_shift.pack()    
 
 
-def decode(file: ttk.Label = None): #Placeholder for now - Will have to include normal decoding
-    decrypted = "Placeholder"
+def decode(file: tk.StringVar = None): #Placeholder for now - Will have to include normal decoding
+    if file is None:
+        print('No input file provided, returning default message...')
+        text_box = tk.Text(word_shift_tab)
+        text_box.insert(tk.INSERT, "No to idziemy na Destiny")
+        text_box.pack()
+    else:
+        file_path = file.get()
+        print(f'Path to input pdf: {file_path}')
 
-    print(f'Decoded information: {decrypted}')
-    text_box = tk.Text(word_shift_tab)
-    text_box.insert(tk.INSERT, decrypted)
-    text_box.pack()
+        page_count = get_page_count(file_path)
+        print(f'Total pages in the document: {page_count}')
+        
+        print('Processing input text...')
+        informations = []
+        for page_idx in range(page_count):
+            page_inf = get_line_spacing(file_path, page_idx)
+            informations += page_inf
 
-def send_file_path(file: ttk.Label):
-    return file.cget('text')
+        print(f'All information from text: {informations}')
+        
+        chunked_inf = split_list(informations, 8) # Assume we are operating on 8-bit symbols
+        print(chunked_inf)
+
+        msg = ""
+        print('Transforming bits into information...')
+        for bits_seq in chunked_inf:
+            msg += bits_to_symbol(bits_seq)
+
+        print(f'Decoded message: {msg}')
+        text_box = tk.Text(word_shift_tab)
+        text_box.insert(tk.INSERT, msg)
+        text_box.pack()

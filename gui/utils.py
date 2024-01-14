@@ -28,6 +28,7 @@ def list_files_directory(dir_path: str = '/Users/lukaszsochacki/Desktop/Studia/S
             res.append(path)
     return res
 
+
 def create_files_dropdown(tab):
     files = list_files_directory()
     
@@ -44,3 +45,26 @@ def create_files_dropdown(tab):
     file_choosen.pack() 
     file_choosen.current(1) 
     return file_choosen
+
+
+def msg_to_bits(msg: str) -> list[str]: # We assume that each symbol will be represented by 8 bits
+    res = []
+    for s in msg:
+        if s.isalnum():
+            bits = bin(ord(s))[2:]
+            bits = '0'*(8 - len(bits)) + bits
+            res.append(bits)
+    return res
+
+
+def split_list(input_list, n): #Splitting input array into chunks of length n - Smaller if cannot split list any more
+    return [input_list[i * n:(i + 1) * n] for i in range((len(input_list) + n - 1) // n )]
+
+
+def bits_to_symbol(bits: list[int]) -> str: #Transform array of 8 bits into a symbol
+    if len(bits) < 8:
+        bits = [0]*(8 - len(bits)) + bits
+    
+    bits_str = "".join(list(map(lambda x: str(x), bits)))
+    ascii_code = int(bits_str, 2)
+    return chr(ascii_code)
