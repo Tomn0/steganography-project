@@ -1,4 +1,16 @@
 import fitz
+import sys
+
+
+def merge_paragraphs(text):
+    paragraphs = text.split('\n\n')
+
+    if len(paragraphs) == 1:
+        paragraphs = text.split('\n')
+
+    merged_text = ' '.join(paragraphs)
+
+    return merged_text
 
 def shift_point(point, dx, dy):
     """
@@ -40,8 +52,26 @@ def truncate_line(line, available_width, font, fontsize):
 
     return truncated_line, remaining_text
 
-def encode_to_pdf(doc, text, result_path, text_to_encode = "10101010", fontname="helv", fontsize=12, margin_size=50, max_line_width=100):
-  # TODO: check the length of the text vs the cover text
+def new_page(doc, margin_size):
+    # Move to the next page
+    page = doc.new_page()
+
+    # reset text pointer
+    p = fitz.Point(margin_size, margin_size)
+
+    return page, p
+
+def encode_to_pdf(doc, 
+                  text, 
+                  text_to_encode = "10101010", 
+                  line_spaces = [13,20],
+                  name = "encoded.pdf", 
+                  fontname="helv", 
+                  fontsize=12, 
+                  margin_size=72, 
+                  max_line_width=100):
+  text_to_encode = text_to_encode.replace(" ", "").replace("\n", "")
+  
   margin = margin_size
   p = fitz.Point(margin, margin)  # start point of 1st line
   page = doc.new_page()  # new or existing page via doc[n]
@@ -72,18 +102,24 @@ def encode_to_pdf(doc, text, result_path, text_to_encode = "10101010", fontname=
     lines.append(line)
 
   text_to_encode = list(text_to_encode)
-  line_spaces = [13,14]
-
+  shift = line_spaces[0]
   for i, line in enumerate(lines):
-    if i % 2 == 0:
+    if i % 2 == 1:
       if text_to_encode:
         val_to_encode = int(text_to_encode.pop(0), 10)
       else: 
         val_to_encode = 0
-      p = shift_point(p, 0, line_spaces[val_to_encode])
+      shift = line_spaces[val_to_encode]
 
     else: 
-      p = shift_point(p, 0, line_spaces[0])
+      shift = line_spaces[0]
+
+    p = shift_point(p, 0, shift)
+    if p.y >= available_height:
+      page, p = new_page(doc, margin_size)
+      p = shift_point(p, 0, shift)
+
+
     page.insert_text(p,
                       line,  # the text (honors '\n')
                       fontname = fontname,  # the default font
@@ -91,19 +127,34 @@ def encode_to_pdf(doc, text, result_path, text_to_encode = "10101010", fontname=
                       fontsize = fontsize,  # the default font size
                       rotate = 0,  # also available: 90, 180, 270
                       )
-    margin += fontsize * 1.2
-    
-    # # Check if there is enough space for the next line
-    if margin + fontsize * 1.2 > available_height:
-      # Move to the next page
-      page = doc.new_page()
-      
-      # reset text pointer
-      p = fitz.Point(50, 72)
-      # Reset the margin
-      margin = margin_size
 
-  doc.save(result_path)
+  doc.save(name)
+
+
+if __name__ == '__main__':
+  doc = fitz.open()  # new or existing PDF
+
+  if len(sys.argv) == 1:
+      filename = "lorem-ipsum"
+  else:
+      filename = sys.argv[1]
+
+
+  with open(f"data/{filename}.txt", "r", encoding="utf-8") as f:
+    filetxt = "".join(f.readlines())
+    filetxt = merge_paragraphs(filetxt)
+
+    encode_to_pdf(doc, 
+                  filetxt, 
+                  name = "encoded.pdf", 
+                  # hello world
+                  text_to_encode="0111100001100100",
+                  fontname="helv", 
+                  line_spaces = [13,14],
+                  fontsize=12, 
+                  margin_size=50, 
+                  max_line_width=100)
+
 
 '''
 funkcja do 
