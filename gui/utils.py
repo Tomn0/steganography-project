@@ -1,6 +1,7 @@
 import os
 import tkinter as tk
-from tkinter import ttk, scrolledtext, filedialog
+from tkinter import ttk, scrolledtext
+import fitz
 
 def create_input(tab, input_label: str, entry_type: str = 'input'):
     label = ttk.Label(tab, text=input_label)
@@ -67,4 +68,19 @@ def bits_to_symbol(bits: list[int]) -> str: #Transform array of 8 bits into a sy
     
     bits_str = "".join(list(map(lambda x: str(x), bits)))
     ascii_code = int(bits_str, 2)
+    #print(f'Ascii: {ascii_code}')
     return chr(ascii_code)
+
+
+def create_status_popup(parent_tab, status_text: str) -> ttk.Label:
+    status_window = tk.Toplevel(parent_tab)
+    status_window.geometry("500x50")
+    status_window.title("Shift status")
+    return ttk.Label(status_window, text=status_text)
+
+
+def get_page_count(pdf_path) -> int:
+    doc = fitz.open(pdf_path)
+    pages = len(doc)
+    doc.close()
+    return pages

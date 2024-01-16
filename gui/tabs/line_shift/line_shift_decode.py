@@ -42,11 +42,10 @@ def call_file_finder(): # We choose pdf that we want to encode based on our text
 
 
 def decode(file: tk.StringVar = None): #Placeholder for now - Will have to include normal decoding
+    status = ""
     if file is None:
-        print('No input file provided, returning default message...')
-        text_box = tk.Text(word_shift_tab)
-        text_box.insert(tk.INSERT, "No to idziemy na Destiny")
-        text_box.pack()
+        status = 'No input file provided, returning default message...'
+        msg = "No to idziemy na Destiny"
     else:
         file_path = file.get()
         print(f'Path to input pdf: {file_path}')
@@ -55,22 +54,23 @@ def decode(file: tk.StringVar = None): #Placeholder for now - Will have to inclu
         print(f'Total pages in the document: {page_count}')
         
         print('Processing input text...')
-        informations = []
-        for page_idx in range(page_count):
-            page_inf = get_line_spacing(file_path, page_idx)
-            informations += page_inf
-
+        informations = get_line_spacing(file_path)
         print(f'All information from text: {informations}')
         
         chunked_inf = split_list(informations, 8) # Assume we are operating on 8-bit symbols
         print(chunked_inf)
 
-        msg = ""
+        msg = ''
         print('Transforming bits into information...')
         for bits_seq in chunked_inf:
             msg += bits_to_symbol(bits_seq)
 
+        status = 'Message decoding went successfully.'
         print(f'Decoded message: {msg}')
-        text_box = tk.Text(word_shift_tab)
-        text_box.insert(tk.INSERT, msg)
-        text_box.pack()
+
+    status_label = create_status_popup(word_shift_tab, status)
+    status_label.pack()
+
+    text_box = tk.Text(word_shift_tab)
+    text_box.insert(tk.INSERT, msg)
+    text_box.pack()

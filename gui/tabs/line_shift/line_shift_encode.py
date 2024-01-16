@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import ttk, filedialog
 from utils import *
-from .create_pdf import encode_to_pdf
+from .encode import encode_to_pdf, merge_paragraphs
 import fitz
 from pathlib import Path
 
@@ -52,6 +52,7 @@ def call_directory_finder(): # We choose pdf that we want to encode based on our
 
 
 def process_data(dir: str, message: scrolledtext.ScrolledText, file: ttk.Combobox):
+    status = "???"
     files_list = list_files_directory()
     data = {
         'directory': dir,
@@ -65,19 +66,22 @@ def process_data(dir: str, message: scrolledtext.ScrolledText, file: ttk.Combobo
     msg_bits = "".join(msg_to_bits(data['message']))
     print(f'Message transformed to bits: {msg_bits}')
 
-    print('Encoding information...')
-    doc = fitz.open()
-
     filename = data['file'].replace('.txt', '')
     save_destination = Path(data['directory'] + '/' + filename + '.pdf')
     print(f'Save destination: {save_destination}')
 
     with open(data_path + '/' + data['file'], "r", encoding="utf-8") as f:
-        data_txt = "".join(f.readlines())
-        encode_to_pdf(doc, data_txt, result_path= save_destination, text_to_encode=msg_bits)
+        doc = fitz.open()
+        print('Trying to encode information...')
+        lines = f.readlines()
+        if(len(lines) < len(msg_bits)):
+            status = f"Too many message bits compared to text length,\n \
+            cannot perform word shift (Lines count: {len(lines)}, bits count: {len(msg_bits)})\n. Try longer text or shorter message."
+        else:
+            data_txt = merge_paragraphs("".join(lines))
+            encode_to_pdf(doc, data_txt, name=save_destination, text_to_encode=msg_bits)
+            status = f"Encoding process went successfully. Results written to {filename}.pdf file"
 
-    success_label = ttk.Label(word_shift_tab)
-    success_label.config(text=f"Encoding process went successfully. Results written to {filename}.pdf file")
-    success_label.pack(pady=10)
-
+    status_label = create_status_popup(word_shift_tab, status)
+    status_label.pack()
         
