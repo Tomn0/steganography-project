@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import ttk, filedialog
 from utils import *
+from .decode import *
 
 select_clicked = False
 
@@ -32,20 +33,43 @@ def call_file_finder(): # We choose pdf that we want to encode based on our text
     execute_shift = ttk.Button(
         word_shift_tab,
         text="Decode",
-        command=lambda: decode(file),
+        command=lambda: process_data(file),
         state="normal"
     )
 
     execute_shift.pack()    
 
 
-def decode(file: ttk.Label = None): #Placeholder for now - Will have to include normal decoding
-    decrypted = "Placeholder"
+def process_data(file: tk.StringVar = None):
+    status = ""
+    if file is None:
+        status = 'No input file provided, returning default message...'
+        msg = "No to idziemy na Destiny"
+    else:
+        file_path = file.get()
+        print(f'Path to input pdf: {file_path}')
 
-    print(f'Decoded information: {decrypted}')
+        page_count = get_page_count(file_path)
+        print(f'Total pages in the document: {page_count}')
+        
+        print('Processing input text...')
+        informations = decode(get_word_spacing(file_path))
+        print(f'All information from text: {informations}')
+        
+        chunked_inf = split_list(informations, 8) # Assume we are operating on 8-bit symbols
+        print(chunked_inf)
+
+        msg = ''
+        print('Transforming bits into information...')
+        for bits_seq in chunked_inf:
+            msg += bits_to_symbol(bits_seq)
+
+        status = 'Message decoding went successfully.'
+        print(f'Decoded message: {msg}')
+
+    status_label = create_status_popup(word_shift_tab, status)
+    status_label.pack()
+
     text_box = tk.Text(word_shift_tab)
-    text_box.insert(tk.INSERT, decrypted)
+    text_box.insert(tk.INSERT, msg)
     text_box.pack()
-
-def send_file_path(file: ttk.Label):
-    return file.cget('text')

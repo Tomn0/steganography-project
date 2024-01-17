@@ -13,7 +13,7 @@ def init(parent):
     global word_shift_tab
 
     word_shift_tab = ttk.Frame(parent)
-    parent.add(word_shift_tab, text="Word shift - Decode")
+    parent.add(word_shift_tab, text="Feature decoding")
 
     select_location_button = ttk.Button(word_shift_tab, text="Select font", command=call_font_finder)
     select_location_button.pack(pady=10)
