@@ -62,7 +62,11 @@ def split_list(input_list, n): #Splitting input array into chunks of length n - 
     return [input_list[i * n:(i + 1) * n] for i in range((len(input_list) + n - 1) // n )]
 
 
-def bits_to_symbol(bits: list[int]) -> str: #Transform array of 8 bits into a symbol
+def bits_to_symbol(bits: list[int] | str) -> str: #Transform array of 8 bits into a symbol
+    if type(bits) is str:
+        bits = list(bits)
+        bits = list(map(lambda x: int(x), bits))
+
     if len(bits) < 8:
         bits = [0]*(8 - len(bits)) + bits
     
