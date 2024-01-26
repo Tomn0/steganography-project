@@ -20,7 +20,7 @@ def create_text_input_field(tab):
     return text_input
 
 
-def list_files_directory(dir_path: str = '/Users/lukaszsochacki/Desktop/Studia/Steganografia/steganography-project/data'):
+def list_files_directory(dir_path: str = 'data'):
     res = []
     # Iterate directory
     for path in os.listdir(dir_path):
