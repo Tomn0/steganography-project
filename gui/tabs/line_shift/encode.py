@@ -5,10 +5,10 @@ import sys
 def merge_paragraphs(text):
     paragraphs = text.split('\n\n')
 
-    if len(paragraphs) == 1:
-        paragraphs = text.split('\n')
+    # if len(paragraphs) == 1:
+    #     paragraphs = text.split('\n')
 
-    merged_text = ' '.join(paragraphs)
+    merged_text = '\n'.join(paragraphs)
 
     return merged_text
 
